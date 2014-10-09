@@ -15,20 +15,31 @@ Route::get('/', function() {
 	return View::make('landing');
 });
 
+Route::get('/home', function() {
+	return View::make('home');
+});
+
 Route::post('/login', function() {
 	$email = Input::get('email');
 	$password = Input::get('password');
-	return "loggin in user $email with $password";
 
-	// TODO Log user in
+	// TODO login user in by auth
+	if (true) {
+		return Redirect::to('/home');
+	} else {
+		return Redirect::to('/');
+	}
 });
 
 Route::post('/register', function() {
 	$fullname = Input::get('fullname');
 	$email = Input::get('email');
 	$password = Input::get('password');
-	return "registering user $fullname, email $email, and password $password";
 
-	// TODO Register user
-	// if username
+	// register user
+	if (true) {
+		return Redirect::to('/home');
+	} else {
+		return Redirect::to('/');
+	}
 });
