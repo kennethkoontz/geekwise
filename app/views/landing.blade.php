@@ -16,8 +16,9 @@
 						<div class="form-group">
 							<input class="form-control" placeholder="Password" type="password" name="password">
 						</div>
+						<p class="text-danger">{{{ Session::get('login_message') }}}</p>
 						<div class="pull-right form-group">
-            <input class="btn btn-primary" type="submit" value="Login">
+				            <input class="btn btn-primary" type="submit" value="Login">
 						</div>
 					</form>	
 				</div>
@@ -32,6 +33,7 @@
 						<div class="form-group">
 							<input class="form-control" placeholder="Password" type="password" name="password">
 						</div>
+						<p class="text-danger">{{{ Session::get('register_message') }}}</p>
 						<div class="pull-right form-group">
 							<input class="btn btn-success" type="submit" value="Sign me up!">
 						</div>

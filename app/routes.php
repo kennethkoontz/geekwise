@@ -16,7 +16,9 @@ Route::get('/', function() {
 });
 
 Route::get('/home', function() {
-	return View::make('home');
+	// TODO get auth user name
+	$email = "johndoe@gmail.com";
+	return View::make('home', array('email'=>$email));
 });
 
 Route::post('/login', function() {
@@ -24,10 +26,10 @@ Route::post('/login', function() {
 	$password = Input::get('password');
 
 	// TODO login user in by auth
-	if (true) {
+	if ($email && $password) {
 		return Redirect::to('/home');
 	} else {
-		return Redirect::to('/');
+		return Redirect::to('/')->with('login_message', 'Email and Password must be set.');
 	}
 });
 
@@ -37,9 +39,9 @@ Route::post('/register', function() {
 	$password = Input::get('password');
 
 	// register user
-	if (true) {
+	if ($fullname && $email && $password) {
 		return Redirect::to('/home');
 	} else {
-		return Redirect::to('/');
+		return Redirect::to('/')->with('register_message', 'Please set Name, Email, and Password');
 	}
 });
