@@ -69,3 +69,8 @@ Route::post('/messages', function() {
 	$message->save();
 	return Redirect::to('/home');
 });
+
+Route::get('/logout', function() {
+	Auth::logout();
+	return Redirect::to('/');
+});
