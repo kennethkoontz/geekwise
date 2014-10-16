@@ -12,13 +12,18 @@
 */
 
 Route::get('/', function() {
+	if (Auth::check()) {
+		return Redirect::to('/home');
+	}
 	return View::make('landing');
 });
 
 Route::get('/home', function() {
-	// TODO get auth user name
-	$email = "johndoe@gmail.com";
-	return View::make('home', array('email'=>$email));
+	if (!Auth::check()) {
+		return Redirect::to('/');
+	}
+	$full_name = Auth::user()->full_name;
+	return View::make('home', array('full_name'=>$full_name));
 });
 
 Route::post('/login', function() {
@@ -26,7 +31,7 @@ Route::post('/login', function() {
 	$password = Input::get('password');
 
 	// TODO login user in by auth
-	if ($email && $password) {
+	if (Auth::attempt(array('email' => $email, 'password' => $password))) {
 		return Redirect::to('/home');
 	} else {
 		return Redirect::to('/')->with('login_message', 'Email and Password must be set.');
@@ -40,6 +45,12 @@ Route::post('/register', function() {
 
 	// register user
 	if ($fullname && $email && $password) {
+		$user = new User;
+		$user->full_name = $fullname;
+		$user->email = $email;
+		$user->password = Hash::make($password);
+		$user->save();
+		Auth::loginUsingId($user->id);
 		return Redirect::to('/home');
 	} else {
 		return Redirect::to('/')->with('register_message', 'Please set Name, Email, and Password');
