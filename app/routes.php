@@ -34,7 +34,7 @@ Route::post('/login', function() {
 	if (Auth::attempt(array('email' => $email, 'password' => $password))) {
 		return Redirect::to('/home');
 	} else {
-		return Redirect::to('/')->with('login_message', 'Email and Password must be set.');
+		return Redirect::to('/')->with('login_message', 'Email and/or Password is incorrect.');
 	}
 });
 
@@ -55,4 +55,17 @@ Route::post('/register', function() {
 	} else {
 		return Redirect::to('/')->with('register_message', 'Please set Name, Email, and Password');
 	}
+});
+
+Route::post('/messages', function() {
+	if (!Auth::check()) {
+		return 'Nope no can do.';
+	}
+	$user = Auth::user();
+	$body = Input::get('message');
+	$message = new Message;
+	$message->body = $body;
+	$message->user_id = $user->id;
+	$message->save();
+	return Redirect::to('/home');
 });
