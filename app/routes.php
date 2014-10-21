@@ -23,7 +23,9 @@ Route::get('/home', function() {
 		return Redirect::to('/');
 	}
 	$full_name = Auth::user()->full_name;
-	return View::make('home', array('full_name'=>$full_name));
+	$user_id = Auth::user()->id;
+	$messages = Message::all();
+	return View::make('home', array('full_name'=>$full_name, 'messages'=>$messages));
 });
 
 Route::post('/login', function() {

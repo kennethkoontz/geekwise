@@ -7,4 +7,8 @@ class Message extends Eloquent {
 	 * @var string
 	 */
 	protected $table = 'messages';
+
+	public function user() {
+		return $this->belongsTo('User');
+	}
 }
