@@ -24,7 +24,14 @@ Route::get('/home', function() {
 	}
 	$full_name = Auth::user()->full_name;
 	$user_id = Auth::user()->id;
-	$messages = Message::all();
+	$messages = DB::select("select messages.*, users.full_name
+							from messages
+							join users on users.id = messages.user_id
+							where user_id in (
+								select follower_id
+								from followers where user_id = ?
+						  	) or messages.user_id = ?
+							order by created_at desc", array($user_id, $user_id));
 	return View::make('home', array('full_name'=>$full_name, 'messages'=>$messages));
 });
 
